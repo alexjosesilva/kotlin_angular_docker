@@ -1,5 +1,5 @@
-# Use the official Node.js 14 image as a base image
-FROM node:14
+# Use the official Node.js 20.11.0 image as a base image
+FROM node:20.11.0
 
 # Set the working directory
 WORKDIR /app
@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Expose the port that your Angular application runs on
-EXPOSE 4200
+# EXPOSE 4200
 
 # Command to run the application
 CMD ["npm", "start"]
