@@ -11,6 +11,7 @@ import { ProductService } from './../../services/product.service';
 export class ProductListComponent implements OnInit {
   products: any[] = [];
   newProduct: any = {};
+  updatedProduct: any = {};
 
   constructor(private productService: ProductService) {}
 
@@ -20,8 +21,19 @@ export class ProductListComponent implements OnInit {
 
   loadProducts(): void {
     this.productService.getAllProducts().subscribe((data: any) => {
-      this.products = data;
+      this.products = data.map((product: any) => ({ ...product, isUpdating: false }));
     });
+  }
+
+  toggleUpdateForm(product: any): void {
+    product.isUpdating = !product.isUpdating; // Alterna o valor da propriedade isUpdating
+    if (!product.isUpdating) {
+      // Limpa os campos de atualização se o formulário for ocultado
+      product.updatedName = '';
+      product.updatedPrice = '';
+      product.updatedModel = '';
+      product.updatedCor = '';
+    }
   }
 
   addProduct(): void {
@@ -33,6 +45,12 @@ export class ProductListComponent implements OnInit {
 
   deleteProduct(productId: number): void {
     this.productService.deleteProduct(productId).subscribe(() => {
+      this.loadProducts();
+    });
+  }
+
+  updateProduct(productId:number, product: any): void {
+    this.productService.updateProduct(productId, product).subscribe(() => {
       this.loadProducts();
     });
   }

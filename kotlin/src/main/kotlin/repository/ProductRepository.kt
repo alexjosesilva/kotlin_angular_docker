@@ -1,4 +1,6 @@
-package org.crud.repository
+package org.crud.kotlin.repository
 
-interface ProductRepository {
-}
+import entity.Product
+import org.springframework.data.repository.CrudRepository
+
+interface ProductRepository : CrudRepository<Product, Long>

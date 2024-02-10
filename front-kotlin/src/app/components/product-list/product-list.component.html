@@ -6,6 +6,19 @@
       <li *ngFor="let product of products">
         {{ product.name }} - {{ product.price }} R$ - {{product.model}} - {{product.cor}}
         <button (click)="deleteProduct(product.id)">Excluir</button>
+        <!-- Botão de atualização -->
+        <button *ngIf="!product.isUpdating" (click)="toggleUpdateForm(product)">Atualizar</button>
+
+        <!-- Campos de entrada para atualizar os dados do produto -->
+        <div *ngIf="product.isUpdating">
+          <p> Novo Nome: <input [(ngModel)]="product.name" /> </p> 
+          <p> Novo Preço: <input [(ngModel)]="product.price" /> </p> 
+          <p> Novo Model: <input [(ngModel)]="product.model" /> </p> 
+          <p> Nova Cor: <input [(ngModel)]="product.cor" /> </p> 
+
+          <button (click)="updateProduct(product.id,product)">Salvar</button>
+          <button (click)="toggleUpdateForm(product)">Cancelar</button>
+      </div>
       </li>
     </ul>
   
